@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@compai/font-recursive": "^0.0.4",
     "three": "^0.158.0"
   },
   "devDependencies": {
