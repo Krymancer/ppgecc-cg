@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "@compai/font-recursive": "^0.0.4",
-    "three": "^0.158.0"
+    "@compai/font-roboto": "^0.0.4",
+    "three": "^0.158.0",
+    "three-mesh-bvh": "^0.6.8"
   },
   "devDependencies": {
     "vite": "^5.0.0"

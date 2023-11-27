@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import typefaceData from "@compai/font-recursive/data/typefaces/normal-400.json";
+import createWordMesh from './wordHelper';
 
 // Set up the scene
 const scene = new THREE.Scene();
@@ -12,47 +10,25 @@ document.body.appendChild(renderer.domElement);
 
 camera.position.z = 5;
 
-const font = new FontLoader().parse(typefaceData);
+// Add an ambient light
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+scene.add(ambientLight);
 
-const textGeometry = new TextGeometry('P', {
-	font: font,
-	size: 1, // Adjust the size as needed
-	height: 0.1, // Extrusion depth
-	curveSegments: 12,
-	bevelEnabled: false,
-});
+const acronym = 'PPGEEC';
+const wordMesh = createWordMesh(acronym);
+scene.add(wordMesh);
 
-const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const box = new THREE.Box3().setFromObject(wordMesh);
+const center = box.getCenter(new THREE.Vector3());
 
-const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-// Position and add the text mesh to the scene
-textMesh.position.set(0, 0, 0);
-scene.add(textMesh);
-
-const particleCount = 1000;
-const particles = new THREE.Group();
-
-const positions = textGeometry.attributes.position;
-
-for (let i = 0; i < particleCount; i++) {
-  const randomIndex = Math.floor(Math.random() * positions.count);
-  const randomVertex = new THREE.Vector3().fromBufferAttribute(positions, randomIndex);
-
-  // Add particles at the random vertices
-  const particle = new THREE.Mesh(new THREE.SphereGeometry(0.02), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-  particle.position.copy(randomVertex);
-  particles.add(particle);
-}
-
-scene.add(particles);
+const spotLight = new THREE.SpotLight(0xff00ff, 5, 100);
+spotLight.position.set(center.x, center.y , center.z + 1);
+spotLight.target.position.copy(center);
+scene.add(spotLight);
 
 function animate() {
   requestAnimationFrame(animate);
-
-  // Render the scene
   renderer.render(scene, camera);
 }
 
-// Start the animation loop
 animate();
