@@ -26,6 +26,25 @@ spotLight.position.set(center.x, center.y , center.z + 1);
 spotLight.target.position.copy(center);
 scene.add(spotLight);
 
+const updateParticlesWithWaves = () => {
+  // Define a velocidade do movimento
+  const speed = 0.05;
+
+  // Define os parâmetros da onda
+  const frequency = 1; // frequência da onda
+  const amplitude = 0.5; // amplitude da onda
+
+  // Move as partículas em uma onda ao longo do eixo Y
+  letters.forEach(({ particles }) => {
+    particles.position.x += speed;
+    particles.position.y = amplitude * Math.sin(frequency * particles.position.x);
+
+    // Reset a posição quando ultrapassar uma certa distância
+    if (particles.position.x > 15) {
+      particles.position.x = -10;
+    }
+  });
+};
 
 // Função para mover constantemente as partículas
 const updateParticles = () => {
@@ -43,7 +62,7 @@ const updateParticles = () => {
   });
 };
 
-wordMesh.addEventListener('update', updateParticles);
+wordMesh.addEventListener('update', updateParticlesWithWaves);
 
 function animate() {
   requestAnimationFrame(animate);
