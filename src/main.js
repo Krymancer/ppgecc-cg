@@ -15,7 +15,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
 const acronym = 'PPGEEC';
-const wordMesh = createWordMesh(acronym);
+const {wordMesh, letters}  = createWordMesh(acronym);
 scene.add(wordMesh);
 
 const box = new THREE.Box3().setFromObject(wordMesh);
@@ -26,8 +26,28 @@ spotLight.position.set(center.x, center.y , center.z + 1);
 spotLight.target.position.copy(center);
 scene.add(spotLight);
 
+
+// Função para mover constantemente as partículas
+const updateParticles = () => {
+  // Define a velocidade do movimento
+  const speed = 0.05;
+
+  // Move as partículas em uma direção constante (por exemplo, ao longo do eixo X)
+  letters.forEach(({ particles }) => {
+    particles.position.x += speed;
+
+    // Reset a posição quando ultrapassar uma certa distância
+    if (particles.position.x > 15) {
+      particles.position.x = -10;
+    }
+  });
+};
+
+wordMesh.addEventListener('update', updateParticles);
+
 function animate() {
   requestAnimationFrame(animate);
+  wordMesh.dispatchEvent({ type: 'update' });
   renderer.render(scene, camera);
 }
 
