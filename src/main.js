@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import createWordMesh from './wordHelper';
+import Stats from 'three/addons/libs/stats.module.js';
 
 // Set up the scene
 const scene = new THREE.Scene();
@@ -61,10 +62,17 @@ const updateParticles = () => {
     }
   });
 };
+const container = document.getElementById( 'container' );
+const stats = new Stats();
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.top = '0px';
+container.appendChild( stats.domElement );
 
 wordMesh.addEventListener('update', updateParticlesWithWaves);
 
 function animate() {
+  stats.update();
+
   requestAnimationFrame(animate);
   wordMesh.dispatchEvent({ type: 'update' });
   renderer.render(scene, camera);
