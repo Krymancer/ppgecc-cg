@@ -1,42 +1,74 @@
 import * as THREE from 'three';
 
-export default function createParticleSystemFromGeometry(object, count = 1000) {
-  const geometry = new THREE.BufferGeometry();
-  const positions = new Float32Array(count * 3);
+function fillWithPoints(geometry, count) {
+
+  var dummyTarget = new THREE.Vector3(); // prevent break ray.at()
+
+  var ray = new THREE.Ray();
+  geometry.computeBoundingBox();
+  let bbox = geometry.boundingBox;
+
+  let points = [];
+
+  var dir = new THREE.Vector3(1, 1, 1).normalize();
+  for (let i = 0; i < count; i++) {
+    let p = setRandomVector(bbox.min, bbox.max);
+    points.push(p);
+  }
+
+  function setRandomVector(min, max) {
+    let v = new THREE.Vector3(
+      THREE.MathUtils.randFloat(min.x, max.x),
+      THREE.MathUtils.randFloat(min.y, max.y),
+      THREE.MathUtils.randFloat(min.z, max.z)
+    );
+    if (!isInside(v)) {
+      return setRandomVector(min, max);
+    }
+    return v;
+  }
+
+  function isInside(v) {
+
+    ray.set(v, dir);
+    let counter = 0;
+
+    let pos = geometry.attributes.position;
+    let faces = pos.count / 3;
+    let vA = new THREE.Vector3(), vB = new THREE.Vector3(), vC = new THREE.Vector3();
+
+    for (let i = 0; i < faces; i++) {
+      vA.fromBufferAttribute(pos, i * 3 + 0);
+      vB.fromBufferAttribute(pos, i * 3 + 1);
+      vC.fromBufferAttribute(pos, i * 3 + 2);
+
+      if (ray.intersectTriangle(vA, vB, vC, false, dummyTarget)) counter++;
+    }
+
+    return counter % 2 == 1;
+  }
+
+  return points
+}
+
+export default function createParticleSystem(mesh, count = 1000) {
+  const points = fillWithPoints(mesh.geometry, count);
+
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
   const group = new THREE.Group();
 
-  // Ensure the geometry is non-indexed
-  if (object.geometry.index !== null) {
-    object.geometry = object.geometry.toNonIndexed();
-  }
+  points.forEach(point => {
+    let mesh;
+    if(Math.random() > 0.5) { 
+      mesh = new THREE.Mesh(new THREE.SphereGeometry(0.01, 8), material); 
+    } else {
+      mesh = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), material); 
+    }
+    mesh.position.copy(point);
+    group.add(mesh);
+  });
 
-  for (let i = 0; i < count; i++) {
-    // Select a random point from the BufferGeometry
-    const index = Math.floor(Math.random() * (object.geometry.attributes.position.count / 3)) * 3; // Random triangle index
-    const vertices = [
-      new THREE.Vector3().fromBufferAttribute(object.geometry.attributes.position, index),
-      new THREE.Vector3().fromBufferAttribute(object.geometry.attributes.position, index + 1),
-      new THREE.Vector3().fromBufferAttribute(object.geometry.attributes.position, index + 2)
-    ];
-
-    const barycoord = new THREE.Vector3(Math.random(), Math.random(), Math.random());
-    barycoord.normalize(); // Ensure the point is inside the triangle
-
-    const position = new THREE.Vector3();
-    position.copy(vertices[0]).multiplyScalar(barycoord.x);
-    position.addScaledVector(vertices[1], barycoord.y);
-    position.addScaledVector(vertices[2], barycoord.z);
-
-    positions[i * 3] = position.x;
-    positions[i * 3 + 1] = position.y;
-    positions[i * 3 + 2] = position.z;
-
-    const particleGeometry = new THREE.SphereGeometry(0.01); // Adjust size as needed
-    const particleMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
-    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-    particle.position.set(position.x, position.y, position.z);
-    group.add(particle);
-  }
+  group.add(mesh);
 
   return group;
 }
