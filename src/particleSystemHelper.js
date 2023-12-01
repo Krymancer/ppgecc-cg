@@ -1,4 +1,17 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const loader = new GLTFLoader();
+
+async function loadModelAsync(url) {
+  return new Promise((resolve, reject) => {
+    loader.load(url, data => resolve(data), null, reject);
+  });
+}
+
+const gltfData = await loadModelAsync('assets/suzanne.glb');
+let suzanneMesh = gltfData.scene.children[0];
+suzanneMesh.scale.set(0.01, 0.01, 0.01);
 
 function fillWithPoints(geometry, count) {
 
@@ -59,10 +72,12 @@ export default function createParticleSystem(mesh, count = 1000) {
 
   points.forEach(point => {
     let mesh;
-    if(Math.random() > 0.5) { 
+    if(Math.random() > 0.6) { 
       mesh = new THREE.Mesh(new THREE.SphereGeometry(0.01, 8), material); 
-    } else {
+    } else if (Math.random() > 0.3) {
       mesh = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), material); 
+    } else {
+        mesh = suzanneMesh.clone();
     }
     mesh.position.copy(point);
     group.add(mesh);
