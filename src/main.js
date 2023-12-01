@@ -19,7 +19,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
 const acronym = 'PPGEEC';
-const wordMesh = createWordMesh(acronym);
+let wordMesh = createWordMesh(acronym);
 wordMesh.position.x = -3;
 scene.add(wordMesh);
 
@@ -39,6 +39,17 @@ document.addEventListener('mousemove', (event) => {
   // Set spotlight position based on mouse coordinates
   spotLight.position.x = mouseX * 5;
   spotLight.position.y = mouseY * 5;
+});
+
+const input = document.getElementById('n');
+const button = document.getElementById('btn');
+
+button.addEventListener('click', () => {
+  const n = parseInt(input.value);
+  scene.remove(wordMesh);
+  wordMesh = createWordMesh(acronym, n);
+  wordMesh.position.x = -3;
+  scene.add(wordMesh);
 });
 
 function animate() {

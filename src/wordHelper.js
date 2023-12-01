@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import createLetterMeshandGeometry from './letterHelper';
 import createParticleSystemFromGeometey from './particleSystemHelper';
 
-export default function createWordMesh(word, letterSpacing = 0.5) {
+export default function createWordMesh(word, count = 1000, letterSpacing = 0.5) {
   const group = new THREE.Group();
 
   let offset = 0;
   for (const letter of word) {
     const mesh = createLetterMeshandGeometry(letter);
-    const particles = createParticleSystemFromGeometey(mesh);
+    const particles = createParticleSystemFromGeometey(mesh, count);
     particles.position.x = offset;
     group.add(particles);
     mesh.geometry.computeBoundingBox();
