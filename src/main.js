@@ -44,13 +44,13 @@ document.addEventListener('mousemove', (event) => {
 function animate() {
   requestAnimationFrame(animate);
 
-  // wordMesh.children.forEach((mesh, index) => {
-  //   // Example: Move meshes in a circular motion
-  //   const angle = Date.now() * 0.001 * (index + 1);
-  //   const radius = 1;
-  //   mesh.position.y = Math.sin(angle) * radius;
-  //   mesh.rotation.y = Math.cos(angle) * radius/2;
-  // });
+  wordMesh.children.forEach((mesh, index) => {
+    // Example: Move meshes in a circular motion
+    const angle = Date.now() * 0.001 * (index + 1);
+    const radius = 1;
+    mesh.position.y = Math.sin(angle) * radius;
+    mesh.rotation.y = Math.cos(angle) * radius/2;
+  });
 
   controls.update();
   renderer.render(scene, camera);
