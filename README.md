@@ -1,6 +1,6 @@
 # Particle System for PPGEEC
 
-Welcome to the project, **Equipe 06**
+Welcome to the project, **Equipe 06**. This repository contains all the files and resources necessary for the creation of a dynamic 3D scene, whose main goal is to form the acronym "PPGEEC" using particles. The project utilizes 3D animation and modeling techniques to simulate the movement and formation of the acronym. 
 
 ## Requirements
 
@@ -49,7 +49,7 @@ Make sure you have these dependencies installed before running the project.
 
 For a detailed demonstration of the project, please watch our video on YouTube:
 
-## Team Members
+## Equipe 06 - Team Members
 
 - José Ediberto do Nascimento Júnior - 433423
 - Salmo da Cruz Mascarenhas - 431447
