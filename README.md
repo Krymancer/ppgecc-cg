@@ -16,3 +16,20 @@ Design a 3D scene with the formation of the acronym PPGEEC from particles, inclu
 - [x] Allowing the user to change the quantity of particles in the scene;
 - [x] Allow differents types of lighting in the scene;
 - [x] Define particles from Blender and importing into the project;
+
+## Deadline
+
+  - [ ] 05/12/2023
+
+## How to run
+
+```bash
+npm install
+npm run dev
+```
+
+## Dependencies
+
+- [Node.js](https://nodejs.org/en/)
+- [Three.js](https://threejs.org/)
+- [Vite](https://vitejs.dev/)
