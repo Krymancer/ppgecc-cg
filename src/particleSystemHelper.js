@@ -73,7 +73,7 @@ export default function createParticleSystem(mesh, count = 1000) {
   points.forEach(point => {
     let mesh;
     if(Math.random() > 0.6) { 
-      mesh = new THREE.Mesh(new THREE.SphereGeometry(0.01, 8), material); 
+      mesh = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8), material); 
     } else if (Math.random() > 0.3) {
       mesh = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), material); 
     } else {
