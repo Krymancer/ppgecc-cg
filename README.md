@@ -45,6 +45,10 @@ This project relies on the following dependencies:
 
 Make sure you have these dependencies installed before running the project.
 
+## Video Demonstration <a name="video-demonstration"></a>
+
+For a detailed demonstration of the project, please watch our video on YouTube:
+
 ## Team Members
 
 - José Ediberto do Nascimento Júnior - 433423
