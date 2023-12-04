@@ -16,6 +16,7 @@ Design a 3D scene with the formation of the acronym PPGEEC from particles, inclu
 - [x] Allowing the user to change the quantity of particles in the scene;
 - [x] Allow differents types of lighting in the scene;
 - [x] Define particles from Blender and importing into the project;
+
 ## How to Run <a name="how-to-run"></a>
 
 To run the project, follow these steps:
@@ -27,7 +28,7 @@ To run the project, follow these steps:
 
 4. Run the following commands:
 
-```bash
+```powershell
 npm install
 npm run dev
 ```
