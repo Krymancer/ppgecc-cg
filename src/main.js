@@ -8,12 +8,8 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
-
-// Otimizações no Renderizador
-const pixelRatio = window.devicePixelRatio || 1;
-renderer.setPixelRatio(pixelRatio);
-const newWidth = window.innerWidth ; // Tamanho reduzido pela metade
-const newHeight = window.innerHeight ; // Tamanho reduzido pela metade
+const newWidth = window.innerWidth; 
+const newHeight = window.innerHeight;
 renderer.setSize(newWidth, newHeight);
 document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
