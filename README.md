@@ -42,6 +42,7 @@ This project relies on the following dependencies:
 - [Node.js](https://nodejs.org/en/)
 - [Three.js](https://threejs.org/)
 - [three-mesh-bvh](https://www.npmjs.com/package/three-mesh-bvh)
+- [Fonts](https://components.ai/)
 - [Vite](https://vitejs.dev/)
 
 Make sure you have these dependencies installed before running the project.
