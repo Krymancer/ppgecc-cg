@@ -49,8 +49,7 @@ Make sure you have these dependencies installed before running the project.
 
 ## Video Demonstration <a name="video-demonstration"></a>
 
-For a detailed demonstration of the project, please watch our video on YouTube:
-
+For a detailed demonstration of the project, please watch our video on YouTube: https://youtu.be/1hw0S76LQnI
 ## Equipe 06 - Team Members
 
 - José Ediberto do Nascimento Júnior - 433423
